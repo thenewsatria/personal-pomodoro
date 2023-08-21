@@ -6,8 +6,10 @@ interface TimerProps {
         textPrimary: string, textSecondary: string, textTertiery: string}
     setTimer: Dispatch<SetStateAction<TimerState>>
     timeState: TimerState
+    iterator: number
+    setIterator: Dispatch<SetStateAction<number>>
 }
-function Timer({themes, setTimer, timeState}: TimerProps) {
+function Timer({themes, setTimer, timeState, iterator, setIterator}: TimerProps) {
     const [isStarted, setIsStarted] = useState(false)
     const [countdownSec, setCountdownSec] = useState(25*60)
     
@@ -37,6 +39,18 @@ function Timer({themes, setTimer, timeState}: TimerProps) {
     }, [])
 
     useEffect(() => {
+        if(countdownSec < 1) {
+            if(timeState == TimerState.POMODORO) {
+                if (iterator % 4 == 0) {
+                    HandleLongBreakBtn()
+                }else{
+                    HandleShortBreakBtn()
+                }
+            }else{
+                HandlePomodoroBtn()
+                setIterator(iterator + 1)
+            }
+        }
         setTimerDisplay(produceTimerStr(countdownSec))
         prevCountVal.current = countdownSec
     }, [countdownSec])
