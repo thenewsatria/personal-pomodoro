@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Timer from "./components/Timer"
 import TimerState from "./types/TimerState";
+import Iteration from "./components/Iteration";
 
 function App() {
 
   const [timerState, setTimerState] = useState<TimerState>(TimerState.POMODORO)
+  const [iteration, setIteration] = useState<number>(0)
 
   function changeTheme(): {bgPrimary: string, bgSecondary: string, bgTertiery: string, 
       textPrimary: string, textSecondary: string, textTertiery: string} {
@@ -29,6 +31,7 @@ function App() {
       <div className={`${changeTheme().bgSecondary} min-h-screen pt-12`}>
         <div className="mx-3">
           <Timer themes={changeTheme()} setTimer={setTimerState} timeState={timerState}/>
+          <Iteration themes={changeTheme()} iterator={iteration} timeState={timerState}/>
         </div>
       </div>
     </>
