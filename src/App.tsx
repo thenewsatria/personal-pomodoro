@@ -4,7 +4,7 @@ function App() {
 
   return (
     <>
-      <div className="bg-red-700">
+      <div className="bg-red-700 min-h-screen pt-12">
         <div className="mx-3">
           <Timer/>
         </div>
