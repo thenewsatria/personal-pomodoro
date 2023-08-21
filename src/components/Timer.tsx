@@ -34,8 +34,9 @@ function Timer({themes, setTimer, timeState, iterator, setIterator}: TimerProps)
         prevIsStarted.current = isStarted
     }, [isStarted])
 
-    useEffect(() => {
+    useEffect(() => {   
         setTimerDisplay(produceTimerStr(countdownSec))
+        setPageTitle(produceTimerStr(countdownSec), timeState)
     }, [])
 
     useEffect(() => {
@@ -52,6 +53,7 @@ function Timer({themes, setTimer, timeState, iterator, setIterator}: TimerProps)
             }
         }
         setTimerDisplay(produceTimerStr(countdownSec))
+        setPageTitle(produceTimerStr(countdownSec), timeState)
         prevCountVal.current = countdownSec
     }, [countdownSec])
 
@@ -77,6 +79,11 @@ function Timer({themes, setTimer, timeState, iterator, setIterator}: TimerProps)
         setIsStarted(false)
         setCountdownSec(15*60)
         setTimer(TimerState.LONG_BREAK)
+    }
+
+    function setPageTitle(message: string, timerStatus: TimerState) {
+        const status = timerStatus == TimerState.POMODORO ? "Pomodoro Time" : timerStatus == TimerState.SHORT_BREAK ? "Short Break Time" : "Long Break Time"
+        document.title = `${message} - ${status}`
     }
 
     function produceTimerStr(secondVal: number): string{
